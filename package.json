@@ -1,0 +1,29 @@
+{
+    "name": "logs2",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+        "dev": "nodemon src/index.js",
+        "migrate:make": "npx knex migrate:make init --migrations-directory src/db/migrations",
+        "migrate:latest": "npx knex migrate:latest --knexfile src/db/knexfile.js",
+        "build": "babel src --out-dir dist",
+        "start": "node dist/index.js",
+        "test": "jest --detectOpenHandles"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "knex": "^0.95.8",
+        "pg": "^8.7.1"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.14.8",
+        "jest": "^27.0.6",
+        "nodemon": "^2.0.12",
+        "supertest": "^6.1.4"
+    }
+}
