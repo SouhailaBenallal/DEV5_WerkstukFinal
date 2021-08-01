@@ -1,6 +1,7 @@
 const app = require('../../app');
 const request = require('supertest');
 
+let UUID;
 describe('GET /api/categories', () => {
     it('should return status code 200 and Json Type', (done) => {
         request(app)
@@ -10,6 +11,20 @@ describe('GET /api/categories', () => {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err);
+                UUID = res.body.categories[0].UUID;
+                return done();
+            });
+    });
+});
+
+describe('DELETE /api/categories/:uuid', () => {
+    it('should return status code 200 and Json Type', (done) => {
+        request(app)
+            .delete(`/api/categories/${UUID}`)
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err);
+                expect(res.body.message).toBe('Category has been deleted');
                 return done();
             });
     });
