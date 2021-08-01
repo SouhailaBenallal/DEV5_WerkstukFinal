@@ -10,6 +10,10 @@ describe('GET /api/categories | get all categories', () => {
             .expect(200)
             .end(function(err, res) {
                 if (err) return done(err);
+                expect(res.body).toHaveProperty("categories")
+                expect(Array.isArray(res.body.categories)).toBe(true);
+                expect(res.body.categories[0]).toHaveProperty("UUID");
+                expect(res.body.categories[0]).toHaveProperty("name");
                 return done();
             });
     });
@@ -24,6 +28,8 @@ describe('POST /api/categories | save a category', () => {
             .expect(400)
             .end(function(err, res) {
                 if (err) return done(err);
+                expect(res.body).toHaveProperty("message");
+                expect(res.body.message).toBe('Name is required');
                 return done();
             });
     });
@@ -37,25 +43,11 @@ describe('POST /api/categories | save a category', () => {
             .expect(201)
             .end(function(err, res) {
                 if (err) return done(err);
-                expect(res.body.message).toBe('Category has been added')
-                expect(res.body).toHaveProperty("category")
+                expect(res.body.message).toBe('Category has been added');
+                expect(res.body).toHaveProperty("category");
+                expect(res.body.category[0]).toHaveProperty("UUID");
+                expect(res.body.category[0]).toHaveProperty("Name");
                 return done();
             });
     });
 });
-
-describe('GET /api/categories/:uuid | get a category', () => {
-
-});
-
-/*describe('GET /api/categories/:uuid | get a category', () => {
-    it('should have property uuid', async(done) => {
-        request(app)
-            .get('/api/categories')
-            .expect('Content-Type', /json/)
-            .expect(200)
-            .end(function(err, res) {
-                if (err) throw err;
-            });
-    });
-});*/
